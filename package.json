@@ -1,9 +1,13 @@
 {
-  "name": "meteor-build-client",
-  "version": "0.3.0",
-  "description": "A bundles the client part of a Meteor app.",
-  "author": "Fabian Vogelsteller <fabian@frozeman.de>",
+  "name": "meteor-build-client-only",
+  "version": "0.4.0",
+  "description": "Meteor bundle client-only.",
+  "author": "Jarno Le Conté <j.le.conte@gmail.com>",
   "contributors": [
+    {
+      "name": "Fabian Vogelsteller",
+      "email": "fabian@frozeman.de"
+    },
     {
       "name": "Morten N.O. Nørgaard Henriksen",
       "email": "mh@gi2.dk"
@@ -14,10 +18,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/frozeman/meteor-build-client"
+    "url": "https://github.com/jarnoleconte/meteor-build-client"
   },
   "bugs": {
-    "url": "https://github.com/frozeman/meteor-build-client/issues"
+    "url": "https://github.com/jarnoleconte/meteor-build-client/issues"
   },
   "keywords": [
     "meteor",

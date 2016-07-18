@@ -1,12 +1,19 @@
+
 Package.describe({
-    name: "frozeman:build-client",
-    summary: "Placeholder package for meteor-build-client (npm). Do not install!",
-    version: "0.3.0",
-    git: "https://github.com/frozeman/meteor-build-client"
+    name: "jarnoleconte:build-client",
+    summary: "Meteor build client-only.",
+    version: "0.4.0",
+    git: "https://github.com/jarnoleconte/meteor-build-client",
 });
 
 
 Package.onUse(function (api) {
-    api.versionsFrom('1.2');
-    api.use('standard-minifiers');
+    api.versionsFrom('1.3');
+    api.use('ecmascript');
+    api.mainModule('export.js');
+});
+
+
+Npm.depends({
+  'meteor-build-client-only': '0.4.0',
 });
