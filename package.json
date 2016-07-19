@@ -1,6 +1,6 @@
 {
   "name": "meteor-build-client-only",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Meteor bundle client-only.",
   "author": "Jarno Le Conté <j.le.conte@gmail.com>",
   "contributors": [

@@ -2,7 +2,7 @@
 Package.describe({
     name: "jarnoleconte:build-client",
     summary: "Meteor build client-only.",
-    version: "0.4.0",
+    version: "0.5.0",
     git: "https://github.com/jarnoleconte/meteor-build-client",
 });
 
@@ -15,5 +15,5 @@ Package.onUse(function (api) {
 
 
 Npm.depends({
-  'meteor-build-client-only': '0.4.0',
+  'meteor-build-client-only': '0.5.0',
 });
