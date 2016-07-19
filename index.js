@@ -14,7 +14,7 @@ function meteorBuildClient(config, done) {
     template: null,
     settings: null, // path or object
     url: null,
-    path: "/",
+    path: null,
     feedback: false, // output console messages
   });
 

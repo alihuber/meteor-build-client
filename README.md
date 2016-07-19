@@ -10,7 +10,6 @@ Call the build method from the server side:
     meteorBuildClient({
         input: '/path/to/my/meteor/project',
         output: '.meteor-build',
-        path: '/', 
         settings: _.pick(Meteor.settings, 'public'),
     });
 

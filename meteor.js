@@ -125,25 +125,23 @@ module.exports = {
         if(_.isString(config.path)) {
 
             // fix paths in the CSS file
-            if(!_.isEmpty(files['css'])) {
-
-                var cssFile = fs.readFileSync(path.join(config.output, files['css']), {encoding: 'utf-8'});
+            _.each(files['css'], function(file, i) {
+                var cssFile = fs.readFileSync(path.join(config.output, file), {encoding: 'utf-8'});
                 cssFile = cssFile.replace(/url\(\'\//g, 'url(\''+ config.path).replace(/url\(\//g, 'url('+ config.path);
-                fs.unlinkSync(path.join(config.output, files['css']));
-                fs.writeFileSync(path.join(config.output, files['css']), cssFile, {encoding: 'utf-8'});
+                fs.unlinkSync(path.join(config.output, file));
+                fs.writeFileSync(path.join(config.output, file), cssFile, {encoding: 'utf-8'});
 
-                files['css'] = config.path + files['css'];
-            }
+                files['css'][i] = config.path + file;
+            });
             files['js'] = config.path + files['js'];
-        } else {
-            if(!_.isEmpty(files['css']))
-                files['css'] = '/'+ files['css'];
-            files['js'] = '/'+ files['js'];
         }
 
 
         // ADD CSS
-        var css = '<link rel="stylesheet" type="text/css" class="__meteor-css__" href="'+ files['css'] +'?meteor_css_resource=true">';
+        var css = "";
+        _.each(files['css'], function(file) {
+           css += '<link rel="stylesheet" type="text/css" class="__meteor-css__" href="'+ file +'?meteor_css_resource=true">';
+        });
         content = content.replace(/{{ *> *css *}}/, css);
 
         // ADD the SCRIPT files
