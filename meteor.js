@@ -113,10 +113,10 @@ module.exports = {
         content = content.replace(/{{ *> *head *}}/,head);
 
         // get the css and js files
-        var files = {};
+        var files = {css: []};
         _.each(fs.readdirSync(config.output), function(file){
             if(/^[a-z0-9]{40}\.css$/.test(file))
-                files['css'] = file;
+                files['css'].push(file);
             if(/^[a-z0-9]{40}\.js$/.test(file))
                 files['js'] = file;
         });
