@@ -1,20 +1,20 @@
 // FIFO
-module.exports = function() {
-  var self = this;
-  var invokations = [];
-  var paused = true;
-  var maxLength = 0;
-  
-  self.progress = function(count, total) {
+module.exports = function () {
+  const self = this;
+  let invokations = [];
+  let paused = true;
+  let maxLength = 0;
+
+  self.progress = function (count, total) {
     // console.log(count + ' of ' + total);
   };
 
-  self.reset = function() {
+  self.reset = function () {
     paused = true;
     invokations = [];
   };
 
-  self.add = function(f) {
+  self.add = function (f) {
     if (paused) {
       if (typeof f !== 'function') {
         throw new Error('queue requires function');
@@ -23,29 +23,26 @@ module.exports = function() {
     }
   };
 
-  self.next = function(text) {
+  self.next = function (text) {
     if (text) {
       self.reset();
       console.log(' ' + text.red);
     }
-    
+
     if (!paused) {
-
-
       if (invokations.length) {
-        var f = invokations.shift();
+        const f = invokations.shift();
         // Update the progress
         self.progress(invokations.length, maxLength);
-        setTimeout(function() {
+        setTimeout(function () {
           // Run function
           f(self.next);
         }, 0);
       }
-
     }
   };
 
-  self.run = function() {
+  self.run = function () {
     paused = false;
     maxLength = invokations.length;
     // Update the progress

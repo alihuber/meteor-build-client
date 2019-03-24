@@ -1,12 +1,12 @@
-var fs = require('fs');
-var path = require('path');
-var Queue = require('./queue');
-var meteor = require('./meteor.js');
-var _ = require('underscore');
+const fs = require('fs');
+const path = require('path');
+const _ = require('underscore');
+const Queue = require('./queue');
+const meteor = require('./meteor.js');
 
 function meteorBuildClient(config, done) {
   config = _.clone(config || {});
-  done = _.isFunction(done) ? done : function(){};
+  done = _.isFunction(done) ? done : function () {};
 
   _.defaults(config, {
     input: './',
@@ -21,72 +21,63 @@ function meteorBuildClient(config, done) {
   config.input = path.resolve(config.input);
   config.output = path.resolve(config.output);
 
-  if (_.isString(config.template))
-    config.template = path.resolve(config.template);
-  if (_.isString(config.settings))
-    config.settings = path.resolve(config.settings);
+  if (_.isString(config.template)) config.template = path.resolve(config.template);
+  if (_.isString(config.settings)) config.settings = path.resolve(config.settings);
 
   config.bundleName = path.basename(config.input);
 
   // Build queue syncron
-  var queue = new Queue();
-
+  const queue = new Queue();
 
   // check if in meteor folder
   try {
-      if(!fs.lstatSync(path.join(config.input, '.meteor')).isDirectory())
-          throw new Error();
-
-  } catch(e) {
-      done('You\'re not in a Meteor app folder or inside a sub folder of your app.');
-      return;
+    if (!fs.lstatSync(path.join(config.input, '.meteor')).isDirectory()) throw new Error();
+  } catch (e) {
+    done("You're not in a Meteor app folder or inside a sub folder of your app.");
+    return;
   }
 
   // check template file
-  if(config.template) {
-      try {
-          if(!fs.lstatSync(config.template).isFile())
-              throw new Error();
-
-      } catch(e) {
-          done('The template file "'+ config.template +'" doesn\'t exist or is not a valid template file');
-          return;
-      }
+  if (config.template) {
+    try {
+      if (!fs.lstatSync(config.template).isFile()) throw new Error();
+    } catch (e) {
+      done('The template file "' + config.template + '" doesn\'t exist or is not a valid template file');
+      return;
+    }
   }
 
   // build meteor
-  queue.add(function(callback){
-      if (config.feedback)
-        console.log('Bundling Meteor app...');
-      meteor.build(config, callback);
+  queue.add(function (callback) {
+    if (config.feedback) console.log('Bundling Meteor app...');
+    meteor.build(config, callback);
   });
 
   // move the files into the build folder
-  queue.add(function(callback){
-      if (config.feedback)
-        console.log('Generating the index.html...');
-      meteor.move(config, callback);
+  queue.add(function (callback) {
+    if (config.feedback) console.log('Generating the index.html...');
+    meteor.move(config, callback);
   });
 
   // create the index.html
-  queue.add(function(callback){
-      meteor.addIndexFile(config, callback);
+  queue.add(function (callback) {
+    meteor.addIndexFile(config, callback);
   });
 
   // delete unecessary fiels
-  queue.add(function(callback){
-      meteor.cleanUp(config, function(){
-          if (config.feedback) {
-            console.log('Done!');
-            console.log('-----');
-            console.log('You can find your files in "'+ config.output +'".');
-          }
-          callback();
-      });
+  queue.add(function (callback) {
+    meteor.cleanUp(config, function () {
+      if (config.feedback) {
+        console.log('Done!');
+        console.log('-----');
+        console.log('You can find your files in "' + config.output + '".');
+      }
+      callback();
+    });
   });
 
   // done
-  queue.add(function() {
+  queue.add(function () {
     done(null);
   });
 
